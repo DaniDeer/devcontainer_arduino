@@ -7,6 +7,7 @@ ARG USER_NAME
 RUN apt update \
     && apt install -y \
     git \
+    udev \
     bash-completion
 
 # Adds the user to the group of which the group id corresponds to the host 'dialout' group id.
