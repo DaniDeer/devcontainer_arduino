@@ -45,3 +45,13 @@ LABEL desccription="Image based on Debuan providing Arduino build and debug envi
 # Install any extern libraries here. Example:
 # Install LiquidCrystal I2C library
 # RUN arduino-cli lib install "LiquidCrystal I2C"
+
+# Install ESP8266 platform package
+ARG PACKAGE_URL
+ARG PLATFORM
+
+RUN mkdir -p /home/$USER_NAME/.arduino15 \
+    && arduino-cli config init \
+    && arduino-cli config set board_manager.additional_urls $PACKAGE_URL \
+    && arduino-cli core update-index \
+    && arduino-cli core install $PLATFORM
