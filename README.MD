@@ -121,6 +121,7 @@ In Linux serial ports are */dev/tty** (where "*" can be a number e.g. 0-3 or som
 - Checkout [this article](https://blog.golioth.io/program-mcu-from-wsl2-with-usb-support/) for more information on how to set up the WSL
 - *Udev* is the Linux subsystem that supplies your computer with device events... get amiliar with it. Check out [this article](https://opensource.com/article/18/11/udev).
   - Use `sudo udevadm monitor -u` to monitor *udev* events
+  - Check also the [Arduino Documentation](https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing/) on how to create a *udev* rule to enable the Arduino IDE to access the serial port and upload code
 - Checkout [this article](https://circuitjournal.com/esp8266-with-arduino-ide) for the general steps in the Arduino IDE to configure a ESP-12E / ESP-12F / NodeMCU.
   - Configure the Board Manager URL
   - Flash boards
