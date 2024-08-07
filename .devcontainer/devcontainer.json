@@ -7,7 +7,6 @@
 		"args": {
 			"USER_NAME": "vscode",
 			"VARIANT": "debian-12",
-			"ARDUINO_IDE_VERSION": "1.8.19", // See releases here (currently only 1.x is available): https://github.com/arduino/Arduino/releases
 			"ARDUINO_CLI_VERSION": "1.0.3"		// See releases here: https://github.com/arduino/arduino-cli/releases
 		}
 	},
@@ -26,7 +25,7 @@
 	"extensions": [
 		"ms-vscode.cpptools-extension-pack",
 		"ms-vscode.vscode-serial-monitor",
-		"vsciot-vscode.vscode-arduino",
+		"vsciot-vscode.vscode-arduino@0.6.230727001",
 		"yzhang.markdown-all-in-one"
 	],
 

@@ -1,7 +1,6 @@
 ARG VARIANT
 FROM mcr.microsoft.com/devcontainers/cpp:${VARIANT}
 
-ARG ARDUINO_IDE_VERSION
 ARG ARDUINO_CLI_VERSION
 ARG USER_NAME
 
@@ -24,15 +23,6 @@ RUN . /root/envfile \
         groupadd -g ${DIALOUT_GID} vscodedialout && usermod -a -G vscodedialout $USER_NAME; \
     fi
 
-# Install Arduino IDE
-RUN mkdir -p /opt \
-    && cd /opt \
-    && wget https://downloads.arduino.cc/arduino-${ARDUINO_IDE_VERSION}-linux64.tar.xz \
-    && tar -xf arduino-${ARDUINO_IDE_VERSION}-linux64.tar.xz \
-    && rm -f arduino-${ARDUINO_IDE_VERSION}-linux64.tar.xz \
-    && mv arduino-${ARDUINO_IDE_VERSION} arduino \
-    && /opt/arduino/install.sh
-
 # Install Arduino CLI
 RUN mkdir -p /opt/arduino-cli \
     && cd /opt/arduino-cli \
@@ -44,7 +34,8 @@ RUN mkdir -p /opt/arduino-cli \
 # Set the default user
 USER $USER_NAME
 
-LABEL arduino-ide-version="${ARDUINO_IDE_VERSION}"
+#LABEL arduino-ide-version="${ARDUINO_IDE_VERSION}"
+LABEL arduino-cli-version="${ARDUINO_CLI_VERSION}"
 LABEL desccription="Image based on Debuan providing Arduino build and debug environment"
 
 # Project specific section
