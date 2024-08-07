@@ -6,7 +6,7 @@
 		"context": ".",
 		"args": {
 			"USER_NAME": "vscode",
-			"VARIANT": "debian-11",
+			"VARIANT": "debian-12",
 			"ARDUINO_IDE_VERSION": "1.8.19",
 			"ARDUINO_CLI_VERSION": "0.13.0"
 		}

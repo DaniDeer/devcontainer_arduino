@@ -1,5 +1,5 @@
 ARG VARIANT
-FROM mcr.microsoft.com/vscode/devcontainers/cpp:0-${VARIANT}
+FROM mcr.microsoft.com/devcontainers/cpp:${VARIANT}
 
 ARG ARDUINO_IDE_VERSION
 ARG ARDUINO_CLI_VERSION

@@ -12,9 +12,9 @@ The devcontainer is configured to launch the container with `--privileged` optio
 
 ## Environment
 This devcontainer has been tested with the following environment:
-- Fedora 36
-- Docker 20.10.17
-- VSCode 1.69.2
+- Ubuntu 22.04 running on WSL 2.2.4.0 (on Win11 23H2)
+- Docker 27.1.1
+- VSCode 1.92.0
 
 ## How to use the devcontainer
 1) Open the project in VSCode: `File->Open Folder`
