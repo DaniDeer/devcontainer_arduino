@@ -9,24 +9,29 @@
 			"VARIANT": "debian-11",
 			"ARDUINO_IDE_VERSION": "1.8.19",
 			"ARDUINO_CLI_VERSION": "0.13.0"
-		 }
+		}
 	},
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
 		"arduino.path": "/opt/arduino",
-		"arduino.logLevel": "verbose"
+		"arduino.logLevel": "verbose",
+		"arduino.useArduinoCli": true,
+		"arduino.additionalUrls": [
+			"http://arduino.esp8266.com/stable/package_esp8266com_index.json"
+		]
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
+		"ms-vscode.cpptools-extension-pack",
+		"ms-vscode.vscode-serial-monitor",
 		"vsciot-vscode.vscode-arduino",
-		"yzhang.markdown-all-in-one",
-		"vsciot-vscode.vscode-arduino"
+		"yzhang.markdown-all-in-one"
 	],
 
 	"mounts": [
-		"source=/dev,target=/dev,type=bind"
+		"source=/dev/ttyUSB0,target=/dev/ttyUSB0,type=bind"
 	],
 	
 	"runArgs": [
