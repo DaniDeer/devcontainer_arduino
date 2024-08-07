@@ -36,7 +36,7 @@ RUN mkdir -p /opt \
 # Install Arduino CLI
 RUN mkdir -p /opt/arduino-cli \
     && cd /opt/arduino-cli \
-    && wget https://github.com/arduino/arduino-cli/releases/download/${ARDUINO_CLI_VERSION}/arduino-cli_${ARDUINO_CLI_VERSION}_Linux_64bit.tar.gz \
+    && wget https://github.com/arduino/arduino-cli/releases/download/v${ARDUINO_CLI_VERSION}/arduino-cli_${ARDUINO_CLI_VERSION}_Linux_64bit.tar.gz \
     && tar -xf arduino-cli_${ARDUINO_CLI_VERSION}_Linux_64bit.tar.gz \
     && rm -f arduino-cli_${ARDUINO_CLI_VERSION}_Linux_64bit.tar.gz \
     && ln -s /opt/arduino-cli/arduino-cli /usr/local/bin/arduino-cli
