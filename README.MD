@@ -4,7 +4,7 @@ This is a self-contained environment that allows compiling and uploading
 Arduino source code without having to install anything on your computer, beside VSCode and Docker. It uses the VSCode's devcontainer built-in feature.
 
 ## Licensing
-The included Docker file, the devcontainer.json file and the hello-world sample are licensed under the MIT License. All other files are governed by their respective licenses.
+The included Docker file, the `devcontainer.json` file and the hello-world sample are licensed under the MIT License. All other files are governed by their respective licenses.
 
 ## How it works
 This devcontainer is based on Microsoft's CPP devcontainer using Debian and contains the required extensions to facilitate Arduino development.  
@@ -38,6 +38,39 @@ For more information about the Arduino extension for VSCode, consult [this page]
 
 ## External librairies
 If you need to install external librairies, use the `arduino-cli lib install` command. See the end of the Docker files for more information.
+
+## Select your board for the project
+This devcontainer setup uses the *Arduino CLI* `1.x` onwards. Which means the installation of the legacy *Arduino IDE* `1.x` is no longer necessary. Checkout the [vscode.vscode-arduino](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.vscode-arduino) extension for further reads on this topic.
+
+The *Arduino CLI* is used to install the necessary platform packages of the boards, so that manual installation of these packages via the `Arduino Board Manager` is no longer necessary after the container has been started.
+
+The parameters `PACKAGE_URL` and `PLATFORM` in devcontainer.json can be set accordingly.
+For example for a project with the *ESP8266* board:
+```JSON
+   "build": {
+		"dockerfile": "Dockerfile",
+		"context": ".",
+		"args": {
+			// ... other parameters ...
+			// Project specific settings
+			"PACKAGE_URL": "http://arduino.esp8266.com/stable/package_esp8266com_index.json",
+			"PLATFORM": "esp8266:esp8266" 
+		}
+```
+>Hint: Look up the URL in [this collection on GitHub](https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls) on 3rd party board support for the `PACKAGE_URL` parameter.
+
+Don't forget to configure the corresponding board type in the `.vscode/arduino.json` file. Using the *ESP8266 NodeMCUv2* as an example, it looks like this:
+```JSON
+   {
+    "board": "esp8266:esp8266:nodemcuv2",
+   }
+```
+>Hint: Use the `arduino-cli board listall` command to use all available options.
+
+### Using the Arduino CLI
+- Check [Arduino CLI Reference](https://arduino.github.io/arduino-cli/1.0/commands/arduino-cli/) on how to use `arduino-cli <command> [flags...]`
+  - Also check [this article](https://ericslenk.com/posts/getting-started-with-the-nodemcu-esp8266-and-arduino-cli) to have an example with an ESP8266 as a reference on how to use these commands
+
 
 ## Troubleshooting
 
@@ -73,7 +106,7 @@ In Linux serial ports are */dev/tty** (where "*" can be a number e.g. 0-3 or som
    ```
    ... which outputs something like: *usb 1-1: ch3411-uart convertor now attached to ttyUSB0*. This means your device path is */dev/ttyUSB0*
 
-2. Create a mount point in the *devcontainer.json* file to have access to this device within your devcontainer.
+2. Create a mount point in the `devcontainer.json` file to have access to this device within your devcontainer.
    ```JSON
    "mounts": [
 		"source=/dev/ttyUSB0,target=/dev/ttyUSB0,type=bind"
@@ -99,7 +132,7 @@ In Linux serial ports are */dev/tty** (where "*" can be a number e.g. 0-3 or som
    ```
 
 ### Add additional Boards Manager URLs to use e.g. an ESP8266
-1. In the *devcontainer.json* file configure the additional URL in *settings* (here for the ESP8266):
+1. In the `devcontainer.json` file configure the additional URL in *settings* (here for the ESP8266):
    ```JSON
    "settings": { 
 		"arduino.additionalUrls": [
@@ -117,7 +150,7 @@ In Linux serial ports are */dev/tty** (where "*" can be a number e.g. 0-3 or som
    }
    ```
 
-### Further ressources
+## Further resources
 - Checkout [this article](https://blog.golioth.io/program-mcu-from-wsl2-with-usb-support/) for more information on how to set up the WSL
 - *Udev* is the Linux subsystem that supplies your computer with device events... get amiliar with it. Check out [this article](https://opensource.com/article/18/11/udev).
   - Use `sudo udevadm monitor -u` to monitor *udev* events
