@@ -55,3 +55,13 @@ RUN mkdir -p /home/$USER_NAME/.arduino15 \
     && arduino-cli config set board_manager.additional_urls $PACKAGE_URL \
     && arduino-cli core update-index \
     && arduino-cli core install $PLATFORM
+# Install any extern libraries here. 
+# See docu: https://arduino.github.io/arduino-cli/0.21/commands/arduino-cli_lib/
+# https://arduino.github.io/arduino-cli/0.21/commands/arduino-cli_lib_install/
+# Example:
+# Install LiquidCrystal I2C library
+# RUN arduino-cli lib install "LiquidCrystal I2C"
+# && arduino-cli lib install ...
+# arduino-cli lib install --config-file /home/$USER_NAME/.arduino15/arduino-cli.yaml \
+#     --additional-urls $PACKAGE_URL \
+    
