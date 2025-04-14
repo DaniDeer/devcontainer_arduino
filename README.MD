@@ -1,51 +1,65 @@
 # VSCODE Devcontainer for Arduino
 
 This is a self-contained environment that allows compiling and uploading
-Arduino source code without having to install anything on your computer, beside VSCode and Docker. It uses the VSCode's devcontainer built-in feature.
-
-## Licensing
-The included Docker file, the `devcontainer.json` file and the hello-world sample are licensed under the MIT License. All other files are governed by their respective licenses.
+Arduino source code without having to install anything on your computer, beside VSCode and Docker.
+It uses the VSCode's devcontainer built-in feature.
 
 ## How it works
+
 This devcontainer is based on Microsoft's CPP devcontainer using Debian and contains the required extensions to facilitate Arduino development.  
 The devcontainer is configured to launch the container with `--privileged` options. This is required to access the serial ports from inside the Docker container. If your feel unsafe about that, you can remove this option and add an UDEV rule to configure the file permissions on the Arduino device automatically.
 
 ## Environment
+
 This devcontainer has been tested with the following environment:
-- Ubuntu 22.04 running on WSL 2.2.4.0 (on Win11 23H2)
+
+- Ubuntu 22.04, 24.10
 - Docker 27.1.1
 - VSCode 1.92.0
 
 ## How to use the devcontainer
-1) Open the project in VSCode: `File->Open Folder`
-2) Reopen it in devcontainer:
-   1)  `CTRL+SHIFT+P` to open the command pallet
-   2)  `Remote-Containers: Reopen in container`
+
+1. Open the project in VSCode: `File->Open Folder`
+2. Reopen it in devcontainer:
+   1. `CTRL+SHIFT+P` to open the command pallet
+   2. `Remote-Containers: Reopen in container`
 
 ## Inside the devcontainer
+
 Most of the option below are also available from the status bar
+
 ### Selecting the Board
+
 From the command pallet, type `Arduino: Board config`
+
 ### Opening the serial monitor
+
 From the command pallet, type `Arduino: Open serial monitor`
+
 ### Opening the library manager
+
 From the command pallet, type `Arduino: Library manager`
+
 ### Working with the code
+
 `ALT-CTRL-R`: Compile only  
 `ALT-CTRL-U`: Compile and upload to the Arduino device
 
 For more information about the Arduino extension for VSCode, consult [this page](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.vscode-arduino).
 
 ## External librairies
+
 If you need to install external librairies, use the `arduino-cli lib install` command. See the end of the Docker files for more information.
 
 ## Select your board for the project
-This devcontainer setup uses the *Arduino CLI* `1.x` onwards. Which means the installation of the legacy *Arduino IDE* `1.x` is no longer necessary. Checkout the [vscode.vscode-arduino](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.vscode-arduino) extension for further reads on this topic.
 
-The *Arduino CLI* is used to install the necessary platform packages of the boards, so that manual installation of these packages via the `Arduino Board Manager` is no longer necessary after the container has been started.
+This devcontainer setup uses the _Arduino CLI_ `1.x` onwards. Which means the installation of the legacy _Arduino IDE_ `1.x` is no longer necessary. Checkout the [vscode.vscode-arduino](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.vscode-arduino) extension for further reads on this topic.
+
+The _Arduino CLI_ is used to install the necessary platform packages of the boards, so that manual installation of these packages via the `Arduino Board Manager` is no longer necessary after the container has been started.
 
 The parameters `PACKAGE_URL` and `PLATFORM` in devcontainer.json can be set accordingly.
-For example for a project with the *ESP8266* board:
+For example for a project with the _ESP8266_ board:
+
 ```JSON
    "build": {
 		"dockerfile": "Dockerfile",
@@ -54,77 +68,81 @@ For example for a project with the *ESP8266* board:
 			// ... other parameters ...
 			// Project specific settings
 			"PACKAGE_URL": "http://arduino.esp8266.com/stable/package_esp8266com_index.json",
-			"PLATFORM": "esp8266:esp8266" 
+			"PLATFORM": "esp8266:esp8266"
 		}
 ```
->Hint: Look up the URL in [this collection on GitHub](https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls) on 3rd party board support for the `PACKAGE_URL` parameter.
 
-Don't forget to configure the corresponding board type in the `.vscode/arduino.json` file. Using the *ESP8266 NodeMCUv2* as an example, it looks like this:
+> Hint: Look up the URL in [this collection on GitHub](https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls) on 3rd party board support for the `PACKAGE_URL` parameter.
+
+Don't forget to configure the corresponding board type in the `.vscode/arduino.json` file. Using the _ESP8266 NodeMCUv2_ as an example, it looks like this:
+
 ```JSON
    {
     "board": "esp8266:esp8266:nodemcuv2",
    }
 ```
->Hint: Use the `arduino-cli board listall` command to use all available options.
+
+> Hint: Use the `arduino-cli board listall` command to use all available options.
 
 ### Using the Arduino CLI
+
 - Check [Arduino CLI Reference](https://arduino.github.io/arduino-cli/1.0/commands/arduino-cli/) on how to use `arduino-cli <command> [flags...]`
   - Also check [this article](https://ericslenk.com/posts/getting-started-with-the-nodemcu-esp8266-and-arduino-cli) to have an example with an ESP8266 as a reference on how to use these commands
-
 
 ## Troubleshooting
 
 ### Pre-requisites on Windows Subsystem for Linux (WSL2)
-Check out the [Microsoft Documentation](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) on how to connect USB devices and perform the installation steps for *USBIPD-WIN*.
+
+Check out the [Microsoft Documentation](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) on how to connect USB devices and perform the installation steps for _USBIPD-WIN_.
 
 After every restart of WSL perform the following steps (little bit anoying...):
-1. Open your WSL VM with `wsl` in a *PowerShell* window and keep the WSL running.
-2. List all USB devices connected to Windows by opening a new *PowerShell* window in *administrator* mode.
+
+1. Open your WSL VM with `wsl` in a _PowerShell_ window and keep the WSL running.
+2. List all USB devices connected to Windows by opening a new _PowerShell_ window in _administrator_ mode.
    ```bash
    usbipd list
    ```
-   Make sure the USB device is shared. Otherwise use (admin priviledges needed): 
+   Make sure the USB device is shared. Otherwise use (admin priviledges needed):
    ```bash
    usbipd bind --busid <busid_e.g:_4-4>
    ```
-2. Attach the USB device to WSL (no admin priviledges needed)
+3. Attach the USB device to WSL (no admin priviledges needed)
    ```bash
    usbipd attach --wsl --busid <busid_e.g:_4-4>
    ```
-3. Perform the following steps in your running WSL shell. List the attached USB devices by running:
+4. Perform the following steps in your running WSL shell. List the attached USB devices by running:
    ```bash
    lsusb
    ```
    You shoud see the device you just attached and be able to interact with it using normal Linux tools.
 
 ### Find the device path on your Linux machine and make it accessible from within your devcontainer
-In Linux serial ports are */dev/tty** (where "*" can be a number e.g. 0-3 or something like *USB0*) not *COMn* which is the notation used in Windows.
+
+In Linux serial ports are _/dev/tty\*\* (where "_" can be a number e.g. 0-3 or something like _USB0_) not _COMn_ which is the notation used in Windows.
 
 1. Check where your device is attached to:
+
    ```bash
    dmseg | grep tty
    ```
-   ... which outputs something like: *usb 1-1: ch3411-uart convertor now attached to ttyUSB0*. This means your device path is */dev/ttyUSB0*
 
-2. Create a mount point in the `devcontainer.json` file to have access to this device within your devcontainer.
-   ```JSON
-   "mounts": [
-		"source=/dev/ttyUSB0,target=/dev/ttyUSB0,type=bind"
-   ],
-   ```
-   For this option the devcontainer needs to run in *priviledged* mode. Add the following to the configuration:
+   ... which outputs something like: _usb 1-1: ch3411-uart convertor now attached to ttyUSB0_. This means your device path is _/dev/ttyUSB0_
+
+2. Use the `--device` flag for Docker `runArgs` to specify the USB port of the uController connected to your host machine:
+
    ```JSON
    "runArgs": [
-		"--privileged",
-		"--cap-add=SYS_PTRACE",
-		"--security-opt",
-		"seccomp=unconfined"
-	],
+   	"--cap-add=SYS_PTRACE",
+   	"--device=/dev/ttyUSB0",
+   	"--security-opt=seccomp=unconfined"
+   ],
    ```
-   For further information consult the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/) for options (*runArgs*) of the `docker container run` command.
-   > Note: This may be not the best option in regards of security. I use it in my home lab environment for developing. BUT there are other possibilities (cgroup method). Checkout [this discussion on stackoverflow](https://stackoverflow.com/questions/24225647/docker-a-way-to-give-access-to-a-host-usb-or-serial-device#comment55565965_30205490).
 
-3. For your Arduino VS Code extension you can now configure the serial port (e.g. */dev/ttyUSB0*) in the `.vscode/arduino.json` file as follows:
+   For further information consult the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/) for options (_runArgs_) of the `docker container run` command.
+
+   > Note: The `--device` flag eliminates the need for `--privileged` mode and creating a mount on `/dev/ttyUSB0` inside the container (check out previous versions).
+
+3. For your Arduino VS Code extension you can now configure the serial port (e.g. _/dev/ttyUSB0_) in the `.vscode/arduino.json` file as follows:
    ```JSON
    {
       "port": "/dev/ttyUSB0",
@@ -132,17 +150,18 @@ In Linux serial ports are */dev/tty** (where "*" can be a number e.g. 0-3 or som
    ```
 
 ### Add additional Boards Manager URLs to use e.g. an ESP8266
-1. In the `devcontainer.json` file configure the additional URL in *settings* (here for the ESP8266):
+
+1. In the `devcontainer.json` file configure the additional URL in _settings_ (here for the ESP8266):
    ```JSON
-   "settings": { 
-		"arduino.additionalUrls": [
-			"http://arduino.esp8266.com/stable/package_esp8266com_index.json"
-		]
-	},
+   "settings": {
+   	"arduino.additionalUrls": [
+   		"http://arduino.esp8266.com/stable/package_esp8266com_index.json"
+   	]
+   },
    ```
-2. In VS Code use the `>Arduino: Board Manager` command, search for e.g. `ESP8266` and install the packages 
+2. In VS Code use the `>Arduino: Board Manager` command, search for e.g. `ESP8266` and install the packages
 3. Use the `>Arduino: Board Config` command to configure the board
-4. Optional: Another option is to configure the settings in the *.vscode/ardunio.json* file as follows:
+4. Optional: Another option is to configure the settings in the _.vscode/ardunio.json_ file as follows:
    ```JSON
    {
     "board": "esp8266:esp8266:nodemcuv2",
@@ -151,10 +170,16 @@ In Linux serial ports are */dev/tty** (where "*" can be a number e.g. 0-3 or som
    ```
 
 ## Further resources
+
 - Checkout [this article](https://blog.golioth.io/program-mcu-from-wsl2-with-usb-support/) for more information on how to set up the WSL
-- *Udev* is the Linux subsystem that supplies your computer with device events... get amiliar with it. Check out [this article](https://opensource.com/article/18/11/udev).
-  - Use `sudo udevadm monitor -u` to monitor *udev* events
-  - Check also the [Arduino Documentation](https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing/) on how to create a *udev* rule to enable the Arduino IDE to access the serial port and upload code
-- Checkout [this article](https://circuitjournal.com/esp8266-with-arduino-ide) for the general steps in the Arduino IDE to configure a ESP-12E / ESP-12F / NodeMCU.
+- Check out the VirtualBox documentation on how to connect a USB device to your VM [VirtualBox forum thread](https://forums.virtualbox.org/viewtopic.php?t=88855), [VirtualBox - USB basics and troubleshooting](https://forums.virtualbox.org/viewtopic.php?f=35&t=82639)
+- _Udev_ is the Linux subsystem that supplies your computer with device events... get amiliar with it. Check out [this article](https://opensource.com/article/18/11/udev).
+  - Use `sudo udevadm monitor -u` to monitor _udev_ events
+  - Check also the [Arduino Documentation](https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing/) on how to create a _udev_ rule to enable the Arduino IDE to access the serial port and upload code
+- Check out [this article](https://circuitjournal.com/esp8266-with-arduino-ide) for the general steps in the Arduino IDE to configure a ESP-12E / ESP-12F / NodeMCU.
   - Configure the Board Manager URL
   - Flash boards
+
+## Licensing
+
+The included Docker file, the `devcontainer.json` file and the hello-world sample are licensed under the MIT License. All other files are governed by their respective licenses.

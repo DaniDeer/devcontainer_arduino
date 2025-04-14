@@ -6,6 +6,7 @@
 		"context": ".",
 		"args": {
 			"USER_NAME": "vscode",
+			"VERSION": "1.2.9",
 			"VARIANT": "debian-12",
 			"ARDUINO_CLI_VERSION": "1.2.0", // See releases here: https://github.com/arduino/arduino-cli/releases
 			// Project specific settings
@@ -16,12 +17,14 @@
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
-		"arduino.useArduinoCli": false,
-		"arduino.logLevel": "verbose",
-    "arduino.commandPath": "/usr/local/bin/arduino-cli",
+		"arduino.useArduinoCli": true, // Use Arduino CLI instead of IDE and...
+		"arduino.commandPath": "/usr/local/bin/arduino-cli", // ...set the path to the CLI
 		"arduino.additionalUrls": [
 			"http://arduino.esp8266.com/stable/package_esp8266com_index.json"
-		]
+		],
+		"arduino.defaultBaudRate": 115200,
+		"arduino.defaultPort": "/dev/ttyUSB0",
+		"arduino.defaultBoard": "esp8266:esp8266:nodemcuv2"
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
@@ -32,15 +35,22 @@
 		"yzhang.markdown-all-in-one"
 	],
 
-	"mounts": ["source=/dev/ttyUSB0,target=/dev/ttyUSB0,type=bind"],
+	// Features to install. See list here: https://containers.dev/features
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
 
+	//"mounts": ["source=/dev/ttyUSB0,target=/dev/ttyUSB0,type=bind"],
+	// instead of mounts use the runArg --device
 	"runArgs": [
-		"--privileged",
 		"--cap-add=SYS_PTRACE",
-		"--security-opt",
-		"seccomp=unconfined"
+		"--device=/dev/ttyUSB0",
+		"--security-opt=seccomp=unconfined"
 	],
 
+	// Command executed ON THE HOST before building the Dockerfile.
+	// Creates envfile containing the GID of the host's 'dialout' group.
+	// Ensure 'dialout' group exists on your host! Escape backslashes and newlines correctly.
 	"initializeCommand": "printf DIALOUT_GID=$(getent group dialout | cut -d ':' -f 3)\\\\n > ${localWorkspaceFolder}/.devcontainer/envfile",
 
 	"remoteUser": "vscode"

@@ -1,3 +1,9 @@
+#include <Arduino.h>
+
+// My functional programming lib located in /home/${USER_NAME}/.arduino15/libraries/FuncyControllerCPP
+#include <FuncyControllerCPP.hpp> // Include the main library header
+using namespace funcy_controller_cpp; // Use the library's namespace to avoid qualifying every type
+
 #define LED_BUILTIN 2  // Onboard LED pin on NodeMCU
 
 void setup() {
